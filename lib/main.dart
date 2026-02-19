@@ -1,8 +1,7 @@
 import 'package:fintech_app/presentation/item_list_screen.dart';
+import 'package:fintech_app/presentation/product_bloc.dart';
 import 'package:flutter/material.dart';
-
-
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,24 +18,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ItemListScreen(),
+      home: BlocProvider(
+          // create: (context) => ProductBloc(sl()), child: const ItemListScreen()),
+          create: (context) => ProductBloc(),
+          child: const ItemListScreen()),
     );
-  }
-}
-
-
-
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
