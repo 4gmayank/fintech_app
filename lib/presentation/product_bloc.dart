@@ -16,13 +16,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       if (event is GetProduct) {
         // getProductEntityUseCase.call();
 
-        Api api = Api();
-        List<ProductResponseModel> productList = await api.fetchProductApis();
-        List<ItemEntity> itemList = List.empty(growable: true);
-        for (var productResponseModel in productList) {
-          itemList.add(ItemEntity(productResponseModel.title, productResponseModel.image, productResponseModel.description));
+        try{
+          Api api = Api();
+          List<ProductResponseModel> productList = await api.fetchProductApis();
+          List<ItemEntity> itemList = List.empty(growable: true);
+          for (var productResponseModel in productList) {
+            itemList.add(ItemEntity(productResponseModel.title,
+                productResponseModel.image, productResponseModel.description));
 
-          emit(ProductSuccess(itemList));
+            emit(ProductSuccess(itemList));
+          }
+        }catch(e, s){
+          print(e);
+          print(s);
         }
       }
     });
