@@ -10,21 +10,21 @@ class Configuration {
 }
 
 class Api {
-  Future<List<ProductResponseModel>> fetchProductApis() async {
+  Future<List> fetchProductApis() async {
     final response = await Dio().get(Configuration.globalUrl);
 
     debugPrint(response.data.toString());
 
     try {
-      final List<dynamic> decodedList =
-          jsonDecode(response.data) as List<dynamic>;
-      List<ProductResponseModel> productList = decodedList
+      List<dynamic> productList = response.data
           .map((item) =>
               ProductResponseModel.fromJson(item as Map<String, dynamic>))
           .toList();
+
       return productList;
     } catch (e, s) {
       print(s);
+      print(e);
     }
     return [];
   }

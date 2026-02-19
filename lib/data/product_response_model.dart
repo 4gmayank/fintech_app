@@ -2,66 +2,84 @@
 
 import 'dart:convert';
 
-ProductResponseModel productResponseModelFromJson(String str) => ProductResponseModel.fromJson(json.decode(str));
+ProductResponseModel productResponseModelFromJson(String str) =>
+    ProductResponseModel.fromJson(json.decode(str));
 
-String productResponseModelToJson(ProductResponseModel data) => json.encode(data.toJson());
+String productResponseModelToJson(ProductResponseModel data) =>
+    json.encode(data.toJson());
 
 class ProductResponseModel {
-    ProductResponseModel({
-        required this.image,
-        required this.price,
-        required this.rating,
-        required this.description,
-        required this.id,
-        required this.title,
-        required this.category,
-    });
+  ProductResponseModel({
+    required this.image,
+    required this.price,
+    // required this.rating,
+    required this.description,
+    required this.id,
+    required this.title,
+    required this.category,
+  });
 
-    String image;
-    double price;
-    Rating rating;
-    String description;
-    int id;
-    String title;
-    String category;
+  String? image;
+  double? price;
 
-    factory ProductResponseModel.fromJson(Map<dynamic, dynamic> json) => ProductResponseModel(
+  // Rating? rating;
+  String? description;
+  int? id;
+  String? title;
+  String? category;
+
+  factory ProductResponseModel.fromJson(Map<dynamic, dynamic> json) {
+    try {
+      return ProductResponseModel(
         image: json["image"],
         price: json["price"]?.toDouble(),
-        rating: Rating.fromJson(json["rating"]),
+        // rating: Rating.fromJson(json["rating"]),
+        // rating: Rating.fromJson(json["rating"]),
         description: json["description"],
         id: json["id"],
         title: json["title"],
         category: json["category"],
-    );
+      );
+    } catch (e, s) {
+      print(e);
+      print(s);
+    }
+    return ProductResponseModel(
+        image: '',
+        price: null,
+        description: '',
+        id: null,
+        title: '',
+        category: '');
+  }
 
-    Map<dynamic, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "image": image,
         "price": price,
-        "rating": rating.toJson(),
+        // "rating": rating.toJson(),
         "description": description,
         "id": id,
         "title": title,
         "category": category,
-    };
+      };
 }
 
 class Rating {
-    Rating({
-        required this.rate,
-        required this.count,
-    });
+  Rating({
+    required this.rate,
+    required this.count,
+  });
 
-    double rate;
-    int count;
+  double rate;
+  int count;
 
-    factory Rating.fromJson(Map<dynamic, dynamic> json) => Rating(
+  factory Rating.fromJson(Map<dynamic, dynamic> json) => Rating(
         rate: json["rate"]?.toDouble(),
         count: json["count"],
-    );
+      );
 
-    Map<dynamic, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "rate": rate,
         "count": count,
-    };
+      };
 }

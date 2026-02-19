@@ -18,11 +18,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
         try{
           Api api = Api();
-          List<ProductResponseModel> productList = await api.fetchProductApis();
+          List<dynamic> productList = await api.fetchProductApis();
           List<ItemEntity> itemList = List.empty(growable: true);
           for (var productResponseModel in productList) {
-            itemList.add(ItemEntity(productResponseModel.title,
-                productResponseModel.image, productResponseModel.description));
+            itemList.add(ItemEntity(productResponseModel.title??"",
+                productResponseModel.image??"", productResponseModel.description??""));
 
             emit(ProductSuccess(itemList));
           }
