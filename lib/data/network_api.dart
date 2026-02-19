@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fintech_app/data/product_response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
@@ -12,18 +13,20 @@ class Api {
   Future<List<ProductResponseModel>> fetchProductApis() async {
     final response = await Dio().get(Configuration.globalUrl);
 
-    print(response.data.toString());
+    debugPrint(response.data.toString());
 
-    // Todo: need to return list of objects from json decode
-    List<ProductResponseModel> productList = List.empty(growable: true);
-    var output= jsonDecode(response.data);
-    print(output);
-
-    // for (var item in jsonDecode(response.data)) {
-    //   productList.add(item);
-    // }
-
-    return productList;
+    try {
+      final List<dynamic> decodedList =
+          jsonDecode(response.data) as List<dynamic>;
+      List<ProductResponseModel> productList = decodedList
+          .map((item) =>
+              ProductResponseModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+      return productList;
+    } catch (e, s) {
+      print(s);
+    }
+    return [];
   }
 
   Future<List<ProductResponseModel>> fetchProductApisHttp() async {
