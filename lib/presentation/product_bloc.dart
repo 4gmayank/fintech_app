@@ -12,7 +12,7 @@ part 'product_event.dart';
 part 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  GetProductEntityUseCase getProductEntityUseCase = null;
+  // GetProductEntityUseCase getProductEntityUseCase = null;
 
   ProductBloc() : super(ProductInitial()) {
     on<ProductEvent>((event, emit) async {
@@ -22,8 +22,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         Api api = Api();
         List<ProductResponseModel> productList = await api.fetchProductApis();
         List<ItemEntity> itemList = List.empty(growable: true);
-        for (var item in productList) {
-          itemList.add(ItemEntity.product(item));
+        for (var productResponseModel in productList) {
+          itemList.add(ItemEntity(productResponseModel.title, productResponseModel.image, productResponseModel.description));
 
           emit(ProductSuccess(itemList));
         }
