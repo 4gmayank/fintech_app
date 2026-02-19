@@ -1,10 +1,7 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fintech_app/data/network_api.dart';
 import 'package:fintech_app/data/product_response_model.dart';
-import 'package:fintech_app/domain/get_products_use_case.dart';
 import 'package:fintech_app/domain/item_entity.dart';
 
 part 'product_event.dart';
