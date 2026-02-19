@@ -16,10 +16,16 @@ class _ItemListScreenState extends State<ItemListScreen> {
     return Scaffold(
       appBar: AppBar(title: Text("Product List")),
       body: BlocConsumer<ProductBloc, ProductState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+
+          },
           builder: (context, state) {
             if (state is ProductSuccess) {
+
               return productList(state.itemList);
+            }
+            if(state is ProductInitial){
+              context.read<ProductBloc>().add(GetProduct());
             }
             return const Center(
               child: CircularProgressIndicator(),
